@@ -1,0 +1,58 @@
+@model IEnumerable<HotelManagement.Models.Room>
+@{
+    ViewData["Title"] = "Admin — Rooms";
+}
+
+<div class="page-header">
+    <h1>Room <em>Management</em></h1>
+    <p>Admin panel — manage all hotel rooms</p>
+</div>
+
+<div class="actions-row">
+    <a asp-action="Create" class="btn btn-gold">+ Add New Room</a>
+    <a asp-controller="Bookings" asp-action="Index" class="btn btn-outline">View All Bookings</a>
+</div>
+
+<div class="card">
+    <table class="data-table">
+        <thead>
+            <tr>
+                <th>Room No.</th>
+                <th>Type</th>
+                <th>Price (PKR)</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var room in Model)
+            {
+                <tr>
+                    <td style="font-family:'Cormorant Garamond',serif; font-size:1.2rem; font-weight:600;">@room.RoomNumber</td>
+                    <td><span class="room-type-badge">@room.Type</span></td>
+                    <td style="font-weight:500;">@room.Price.ToString("N0")</td>
+                    <td>
+                        @if (room.IsAvailable)
+                        {
+                            <span class="badge badge-available">Available</span>
+                        }
+                        else
+                        {
+                            <span class="badge badge-occupied">Occupied</span>
+                        }
+                    </td>
+                    <td>
+                        <div class="btn-group">
+                            <a asp-action="Edit" asp-route-id="@room.Id" class="btn btn-outline btn-sm">Edit</a>
+                            <a asp-action="Delete" asp-route-id="@room.Id" class="btn btn-danger btn-sm">Delete</a>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    @if (!Model.Any())
+    {
+        <p style="text-align:center; padding:2rem; color:var(--text-muted);">No rooms found. Add your first room above.</p>
+    }
+</div>

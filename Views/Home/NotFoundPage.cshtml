@@ -1,0 +1,18 @@
+@{
+    ViewData["Title"] = "Page Not Found";
+}
+
+<div class="page-header">
+    <h1>Page <em>Not Found</em></h1>
+    <p>We could not find the page you were looking for</p>
+</div>
+
+<div class="error-panel">
+    <p style="color:var(--text-muted); max-width:520px; margin:0 auto 1.5rem;">
+        The page may have been moved or removed. Try one of the quick links below.
+    </p>
+    <div style="display:flex; gap:0.75rem; justify-content:center; flex-wrap:wrap;">
+        <a asp-controller="Home" asp-action="Index" class="btn btn-primary">Back to Home</a>
+        <a asp-controller="Rooms" asp-action="Index" class="btn btn-outline">Browse Rooms</a>
+    </div>
+</div>

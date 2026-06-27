@@ -1,0 +1,61 @@
+@model IEnumerable<HotelManagement.Models.Booking>
+@{
+    ViewData["Title"] = "Admin — All Bookings";
+}
+
+<div class="page-header">
+    <h1>All <em>Bookings</em></h1>
+    <p>Admin view — manage all guest reservations</p>
+</div>
+
+<div class="actions-row">
+    <a asp-controller="Rooms" asp-action="AdminIndex" class="btn btn-outline">← Back to Rooms</a>
+    <p style="color:var(--text-muted); font-size:0.82rem;">Total: @Model.Count() booking(s)</p>
+</div>
+
+<div class="card">
+    <table class="data-table">
+        <thead>
+            <tr>
+                <th>Ref #</th>
+                <th>Guest Name</th>
+                <th>Room</th>
+                <th>Type</th>
+                <th>Check-In</th>
+                <th>Check-Out</th>
+                <th>Nights</th>
+                <th>Total (PKR)</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var b in Model)
+            {
+                <tr>
+                    <td style="font-family:'Cormorant Garamond',serif; font-size:1.1rem; color:var(--gold);">#@b.Id</td>
+                    <td style="font-weight:500;">@b.UserName</td>
+                    <td>Room @b.Room?.RoomNumber</td>
+                    <td><span class="room-type-badge">@b.Room?.Type</span></td>
+                    <td>@b.BookingDate.ToString("MMM dd, yyyy")</td>
+                    <td>@b.CheckOutDate.ToString("MMM dd, yyyy")</td>
+                    <td>@b.Nights</td>
+                    <td>@b.TotalPrice.ToString("N0")</td>
+                    <td>
+                        <div style="display:flex; gap:0.4rem; align-items:center;">
+                            <a asp-action="Invoice" asp-route-id="@b.Id" class="btn btn-outline btn-sm">Invoice</a>
+                            <form asp-action="Cancel" asp-route-id="@b.Id" method="post" style="display:inline;"
+                                  onsubmit="return confirm('Cancel booking #@b.Id for @b.UserName?');">
+                                <input type="hidden" name="returnUrl" value="admin" />
+                                <button type="submit" class="btn btn-danger btn-sm">Cancel</button>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    @if (!Model.Any())
+    {
+        <p style="text-align:center; padding:2rem; color:var(--text-muted);">No bookings found.</p>
+    }
+</div>

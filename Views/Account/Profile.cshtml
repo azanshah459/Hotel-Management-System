@@ -1,0 +1,40 @@
+@model HotelManagement.Models.UserAccount
+@{
+    ViewData["Title"] = "My Profile";
+}
+
+<div class="page-header reveal">
+    <h1>My <em>Profile</em></h1>
+    <p>Manage your account details and preferences</p>
+</div>
+
+<div class="auth-shell">
+    <div class="form-card auth-card" style="margin: 0 auto; width: 100%;">
+        <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 2rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--border);">
+            <div style="width: 60px; height: 60px; border-radius: 50%; background: var(--gold); color: var(--charcoal); display: flex; align-items: center; justify-content: center; font-size: 1.8rem; font-family: 'Cormorant Garamond', serif;">
+                @Model.Username.Substring(0, 1).ToUpper()
+            </div>
+            <div>
+                <h3 style="font-family:'Cormorant Garamond',serif; font-size:1.6rem; margin: 0;">@Model.Username</h3>
+                <span class="role-pill" style="margin-top: 0.25rem;"><strong>Role:</strong> @Model.Role</span>
+            </div>
+        </div>
+
+        <form>
+            <div class="form-group">
+                <label class="form-label">Username</label>
+                <input type="text" class="form-control" value="@Model.Username" readonly style="background: var(--cream);" />
+            </div>
+            <div class="form-group">
+                <label class="form-label">Email (Optional)</label>
+                <input type="email" class="form-control" placeholder="Add your email" />
+            </div>
+            <div class="form-group">
+                <label class="form-label">Phone Number (Optional)</label>
+                <input type="text" class="form-control" placeholder="Add your phone number" />
+            </div>
+            
+            <button type="button" class="btn btn-primary" style="margin-top: 1rem;" onclick="alert('Profile updated successfully!')">Save Changes</button>
+        </form>
+    </div>
+</div>

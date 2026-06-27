@@ -1,0 +1,53 @@
+@model HotelManagement.Models.Booking
+@{
+    ViewData["Title"] = "Booking Confirmed";
+}
+
+<div style="padding: 2rem 0;">
+    <div class="confirmation-box">
+        <div class="confirmation-box-header">
+            <p style="color:var(--gold-light); font-size:0.72rem; letter-spacing:0.25em; text-transform:uppercase; margin-bottom:0.5rem;">✓ Booking Confirmed</p>
+            <h2>Thank you, @Model.UserName</h2>
+            <p style="color: #999; font-size:0.82rem; margin-top:0.5rem;">Reference #@Model.Id</p>
+        </div>
+        <div class="confirmation-box-body">
+            <div class="detail-row">
+                <span class="detail-label">Reference ID</span>
+                <span class="detail-value" style="font-family:'Cormorant Garamond',serif; font-size:1.3rem; color:var(--gold);">#@Model.Id</span>
+            </div>
+            <div class="detail-row">
+                <span class="detail-label">Room Number</span>
+                <span class="detail-value">@Model.Room?.RoomNumber</span>
+            </div>
+            <div class="detail-row">
+                <span class="detail-label">Room Type</span>
+                <span class="detail-value">@Model.Room?.Type</span>
+            </div>
+            <div class="detail-row">
+                <span class="detail-label">Guest Name</span>
+                <span class="detail-value">@Model.UserName</span>
+            </div>
+            <div class="detail-row">
+                <span class="detail-label">Check-In Date</span>
+                <span class="detail-value">@Model.BookingDate.ToString("dddd, MMMM dd, yyyy")</span>
+            </div>
+            <div class="detail-row">
+                <span class="detail-label">Check-Out Date</span>
+                <span class="detail-value">@Model.CheckOutDate.ToString("dddd, MMMM dd, yyyy")</span>
+            </div>
+            <div class="detail-row">
+                <span class="detail-label">Nights</span>
+                <span class="detail-value">@Model.Nights</span>
+            </div>
+            <div class="detail-row">
+                <span class="detail-label">Total</span>
+                <span class="detail-value">PKR @Model.TotalPrice.ToString("N0")</span>
+            </div>
+
+            <div style="display:flex; gap:0.75rem; margin-top:2rem;">
+                <a asp-controller="Bookings" asp-action="MyBookings" class="btn btn-primary">View My Bookings</a>
+                <a asp-controller="Rooms" asp-action="Index" class="btn btn-outline">Browse More Rooms</a>
+            </div>
+        </div>
+    </div>
+</div>

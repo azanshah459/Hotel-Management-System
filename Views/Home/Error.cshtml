@@ -1,0 +1,18 @@
+@{
+    ViewData["Title"] = "Something Went Wrong";
+}
+
+<div class="page-header">
+    <h1>We hit a <em>snag</em></h1>
+    <p>Something went wrong while loading your request</p>
+</div>
+
+<div class="error-panel">
+    <p style="color:var(--text-muted); max-width:520px; margin:0 auto 1.5rem;">
+        Please try again, or return to the homepage. If the issue continues, contact the front desk.
+    </p>
+    <div style="display:flex; gap:0.75rem; justify-content:center; flex-wrap:wrap;">
+        <a asp-controller="Home" asp-action="Index" class="btn btn-primary">Back to Home</a>
+        <a asp-controller="Rooms" asp-action="Index" class="btn btn-outline">Browse Rooms</a>
+    </div>
+</div>

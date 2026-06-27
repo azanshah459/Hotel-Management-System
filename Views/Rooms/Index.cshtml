@@ -1,0 +1,80 @@
+@model IEnumerable<HotelManagement.Models.Room>
+@{
+    ViewData["Title"] = "Available Rooms";
+    var roomTypes = ViewBag.RoomTypes as IEnumerable<string> ?? Enumerable.Empty<string>();
+}
+
+@functions {
+    private string RoomImage(string type)
+    {
+        return type switch
+        {
+            "Deluxe" => Url.Content("~/images/room-deluxe.svg"),
+            "Suite" => Url.Content("~/images/room-suite.svg"),
+            "Presidential Suite" => Url.Content("~/images/room-presidential.svg"),
+            "Family Room" => Url.Content("~/images/room-family.svg"),
+            _ => Url.Content("~/images/room-standard.svg")
+        };
+    }
+}
+
+<div class="page-header">
+    <h1>Available <em>Rooms</em></h1>
+    <p>Select a room to begin your booking</p>
+</div>
+
+<form method="get" asp-action="Index" class="filter-bar">
+    <select class="select-control" name="type">
+        <option value="">All Types</option>
+        @foreach (var roomType in roomTypes)
+        {
+            <option value="@roomType" selected="@(ViewBag.SelectedType == roomType)">@roomType</option>
+        }
+    </select>
+    <input class="form-control" type="number" name="minPrice" step="1" placeholder="Min price" value="@(ViewBag.MinPrice ?? string.Empty)" />
+    <input class="form-control" type="number" name="maxPrice" step="1" placeholder="Max price" value="@(ViewBag.MaxPrice ?? string.Empty)" />
+    <select class="select-control" name="sort">
+        <option value="" selected="@(string.IsNullOrWhiteSpace(ViewBag.Sort))">Sort by</option>
+        <option value="price-asc" selected="@(ViewBag.Sort == "price-asc")">Price: Low to High</option>
+        <option value="price-desc" selected="@(ViewBag.Sort == "price-desc")">Price: High to Low</option>
+    </select>
+    <button type="submit" class="btn btn-primary">Apply</button>
+</form>
+
+@if (!Model.Any())
+{
+    <div style="text-align:center; padding: 4rem 2rem; background: var(--white); border: 1px solid var(--border); border-radius:4px;">
+        <p style="font-family:'Cormorant Garamond',serif; font-size:2rem; color:var(--text-muted); font-weight:300;">No rooms available at the moment</p>
+        <p style="color:var(--text-muted); font-size:0.85rem; margin-top:0.5rem;">Please check back later or contact the front desk.</p>
+    </div>
+}
+else
+{
+    <div class="rooms-grid">
+        @foreach (var room in Model)
+        {
+            <div class="room-card">
+                <div class="room-card-banner"></div>
+                <div class="room-photo" style="background-image:url('@RoomImage(room.Type)');"></div>
+                <div class="room-card-body">
+                    <div class="room-number">Room @room.RoomNumber</div>
+                    <div><span class="room-type-badge">@room.Type</span></div>
+                    <div class="room-price">
+                        PKR @room.Price.ToString("N0") <span>/ night</span>
+                    </div>
+                    <p style="font-size:0.82rem; color:var(--text-muted); margin-bottom:1.25rem;">
+                        <span class="availability-dot"></span> Available for booking
+                    </p>
+                    <div style="display:grid; gap:0.6rem;">
+                        <a asp-action="Details" asp-route-id="@room.Id" class="btn btn-outline" style="width:100%; text-align:center;">
+                            View Details
+                        </a>
+                        <a asp-controller="Bookings" asp-action="Book" asp-route-id="@room.Id" class="btn btn-gold" style="width:100%; text-align:center;">
+                            Book This Room
+                        </a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}

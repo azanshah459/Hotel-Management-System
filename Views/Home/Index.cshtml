@@ -1,0 +1,65 @@
+@{
+    ViewData["Title"] = "Welcome";
+}
+
+<div class="hero-shell">
+    <div class="hero-content reveal">
+        <p class="hero-eyebrow">★ Luxury Hotel Management System ★</p>
+        <h1 class="hero-title">Welcome to <em>FAST Hotel</em></h1>
+        <p class="hero-subtitle">Orchestrate rooms, bookings, and guest experiences with precision and elegance.</p>
+        <div class="hero-actions">
+            <a asp-controller="Rooms" asp-action="Index" class="btn btn-primary">Browse Available Rooms</a>
+            <a asp-controller="Bookings" asp-action="MyBookings" class="btn btn-outline">View My Bookings</a>
+        </div>
+    </div>
+    <div class="hero-panel reveal">
+        <h3>Today at a glance</h3>
+        <p style="color:var(--text-muted); font-size:0.85rem;">Live availability and booking momentum across the property.</p>
+        <div class="hero-metrics">
+            <div class="metric-card">
+                <div class="metric-value">@ViewBag.TotalRooms</div>
+                <div class="metric-label">Total Rooms</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value">@ViewBag.AvailableRooms</div>
+                <div class="metric-label">Available Now</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value">@ViewBag.TotalBookings</div>
+                <div class="metric-label">Active Bookings</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="soft-divider">— ✦ —</div>
+
+
+<div class="soft-divider">— ✦ —</div>
+
+<h2 class="section-title">Signature Rooms</h2>
+<p class="section-sub">A curated glimpse of the FAST Hotel experience</p>
+
+<div class="gallery-grid">
+    <div class="gallery-card reveal">
+        <div class="gallery-photo" style="background-image:url('@Url.Content("~/images/room-standard.svg")');"></div>
+        <div class="gallery-body">
+            <div class="room-type-badge">Standard</div>
+            <p style="margin-top:0.5rem; color:var(--text-muted); font-size:0.82rem;">Bright, calm, and perfectly balanced for short city stays.</p>
+        </div>
+    </div>
+    <div class="gallery-card reveal">
+        <div class="gallery-photo" style="background-image:url('@Url.Content("~/images/room-deluxe.svg")');"></div>
+        <div class="gallery-body">
+            <div class="room-type-badge">Deluxe</div>
+            <p style="margin-top:0.5rem; color:var(--text-muted); font-size:0.82rem;">Layered textures, richer space, and elevated views.</p>
+        </div>
+    </div>
+    <div class="gallery-card reveal">
+        <div class="gallery-photo" style="background-image:url('@Url.Content("~/images/room-suite.svg")');"></div>
+        <div class="gallery-body">
+            <div class="room-type-badge">Suite</div>
+            <p style="margin-top:0.5rem; color:var(--text-muted); font-size:0.82rem;">Seamless lounge areas with premium comfort touches.</p>
+        </div>
+    </div>
+</div>

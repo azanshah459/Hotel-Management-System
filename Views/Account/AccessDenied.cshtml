@@ -1,0 +1,18 @@
+@{
+    ViewData["Title"] = "Access Denied";
+}
+
+<div class="page-header">
+    <h1>Access <em>Denied</em></h1>
+    <p>You do not have permission to view this page</p>
+</div>
+
+<div class="form-card" style="max-width:520px;">
+    <p style="margin-bottom:1.5rem; color:var(--text-muted);">
+        Please sign in with an account that has access, or return to the homepage.
+    </p>
+    <div style="display:flex; gap:0.75rem;">
+        <a asp-controller="Account" asp-action="Login" class="btn btn-gold">Go to Login</a>
+        <a asp-controller="Home" asp-action="Index" class="btn btn-outline">Back to Home</a>
+    </div>
+</div>

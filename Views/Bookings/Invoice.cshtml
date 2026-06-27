@@ -1,0 +1,66 @@
+@model HotelManagement.Models.Booking
+@{
+    ViewData["Title"] = "Invoice #" + Model.Id;
+}
+
+<div class="page-header" style="text-align: center; border: none;">
+    <h1 style="font-size: 3rem; margin-bottom: 0;">Grand <em>Horizon</em></h1>
+    <p style="letter-spacing: 0.15em; text-transform: uppercase;">Official Invoice</p>
+</div>
+
+<div class="confirmation-box reveal" style="max-width: 700px; padding: 2rem;">
+    <div style="display: flex; justify-content: space-between; border-bottom: 2px solid var(--charcoal); padding-bottom: 1rem; margin-bottom: 2rem;">
+        <div>
+            <p style="font-weight: 500; font-size: 1.1rem;">Billed To:</p>
+            <p style="font-size: 1.2rem; font-family: 'Cormorant Garamond', serif; color: var(--gold);">@Model.UserName</p>
+        </div>
+        <div style="text-align: right;">
+            <p style="font-weight: 500; font-size: 1.1rem;">Invoice #@Model.Id</p>
+            <p style="color: var(--text-muted); font-size: 0.9rem;">Date: @DateTime.Today.ToString("MMM dd, yyyy")</p>
+        </div>
+    </div>
+
+    <table style="width: 100%; border-collapse: collapse; margin-bottom: 2rem;">
+        <thead>
+            <tr style="border-bottom: 1px solid var(--border); text-align: left; color: var(--text-muted); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.1em;">
+                <th style="padding: 0.5rem 0;">Description</th>
+                <th style="padding: 0.5rem 0; text-align: right;">Amount</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td style="padding: 1rem 0;">
+                    <strong style="display: block;">Room @Model.Room?.RoomNumber - @Model.Room?.Type</strong>
+                    <span style="font-size: 0.85rem; color: var(--text-muted);">@Model.BookingDate.ToString("MMM dd") to @Model.CheckOutDate.ToString("MMM dd") (@Model.Nights nights)</span>
+                </td>
+                <td style="padding: 1rem 0; text-align: right; font-weight: 500;">
+                    PKR @Model.TotalPrice.ToString("N0")
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div style="border-top: 2px solid var(--border); padding-top: 1rem; display: flex; justify-content: space-between; align-items: center;">
+        <p style="font-size: 0.8rem; color: var(--text-muted); max-width: 300px;">
+            Thank you for choosing Grand Horizon. We hope you enjoy your stay.
+        </p>
+        <div style="text-align: right;">
+            <p style="font-size: 0.9rem; font-weight: 500; text-transform: uppercase;">Total Due</p>
+            <p style="font-size: 2rem; font-family: 'Cormorant Garamond', serif; color: var(--charcoal); line-height: 1;">PKR @Model.TotalPrice.ToString("N0")</p>
+        </div>
+    </div>
+</div>
+
+<div style="text-align: center; margin-top: 2rem;">
+    <button onclick="window.print()" class="btn btn-primary" style="margin-right: 1rem;">🖨 Print Invoice</button>
+    <a asp-action="MyBookings" class="btn btn-outline">Back to Bookings</a>
+</div>
+
+<style>
+    @@media print {
+        body { background: white !important; }
+        nav, footer, .btn { display: none !important; }
+        .page-container { padding: 0 !important; margin: 0 !important; }
+        .confirmation-box { border: none !important; box-shadow: none !important; width: 100% !important; max-width: none !important; padding: 0 !important; }
+    }
+</style>

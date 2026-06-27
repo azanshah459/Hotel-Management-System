@@ -1,0 +1,43 @@
+@model HotelManagement.Models.Room
+@{
+    ViewData["Title"] = "Delete Room";
+}
+
+<div class="page-header">
+    <h1>Delete <em>Room @Model.RoomNumber</em></h1>
+    <p>This action cannot be undone</p>
+</div>
+
+<div class="form-card">
+    <div style="background:#FAEAEA; border-left:3px solid var(--error); padding:1rem 1.25rem; border-radius:3px; margin-bottom:1.5rem;">
+        <strong style="color:var(--error); font-size:0.85rem;">⚠ Warning:</strong>
+        <span style="font-size:0.85rem; color:var(--error);"> This will permanently delete Room @Model.RoomNumber and all its bookings.</span>
+    </div>
+
+    <div style="margin-bottom:1.5rem;">
+        <div class="detail-row">
+            <span class="detail-label">Room Number</span>
+            <span class="detail-value">@Model.RoomNumber</span>
+        </div>
+        <div class="detail-row">
+            <span class="detail-label">Type</span>
+            <span class="detail-value">@Model.Type</span>
+        </div>
+        <div class="detail-row">
+            <span class="detail-label">Price</span>
+            <span class="detail-value">PKR @Model.Price.ToString("N0") / night</span>
+        </div>
+        <div class="detail-row">
+            <span class="detail-label">Status</span>
+            <span class="detail-value">@(Model.IsAvailable ? "Available" : "Occupied")</span>
+        </div>
+    </div>
+
+    <form asp-action="Delete" method="post">
+        <input type="hidden" asp-for="Id" />
+        <div style="display:flex; gap:0.75rem;">
+            <button type="submit" class="btn btn-danger">Yes, Delete Room</button>
+            <a asp-action="AdminIndex" class="btn btn-outline">Cancel</a>
+        </div>
+    </form>
+</div>

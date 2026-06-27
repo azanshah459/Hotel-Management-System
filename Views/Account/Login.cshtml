@@ -1,0 +1,60 @@
+@model HotelManagement.Models.LoginViewModel
+@{
+    ViewData["Title"] = "Sign In";
+}
+
+<div class="page-header">
+    <h1>Member <em>Login</em></h1>
+    <p>Sign in as admin or guest to manage your hotel experience</p>
+</div>
+
+<div class="auth-shell">
+    <div class="auth-hero">
+        <h2>Grand Horizon</h2>
+        <p>Luxury stays, seamless bookings, and an admin console crafted for clarity.</p>
+
+        <div class="auth-highlight">
+            <div class="auth-highlight-item"><span class="auth-dot"></span> Instant room availability</div>
+            <div class="auth-highlight-item"><span class="auth-dot"></span> Verified guest bookings</div>
+            <div class="auth-highlight-item"><span class="auth-dot"></span> Admin-grade room control</div>
+        </div>
+    </div>
+
+    <div class="form-card auth-card">
+        <form asp-action="Login" method="post">
+            <input type="hidden" name="returnUrl" value="@(ViewData["ReturnUrl"] ?? string.Empty)" />
+            <div asp-validation-summary="ModelOnly" class="validation-summary-errors"></div>
+
+            <div class="form-group">
+                <label asp-for="Username" class="form-label"></label>
+                <input asp-for="Username" class="form-control" placeholder="Enter your username" />
+                <span asp-validation-for="Username" class="field-validation-error"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Password" class="form-label"></label>
+                <input asp-for="Password" class="form-control" placeholder="Enter your password" />
+                <span asp-validation-for="Password" class="field-validation-error"></span>
+            </div>
+
+            <div style="display:flex; gap:0.75rem; margin-top:1.75rem;">
+                <button type="submit" class="btn btn-gold">Login</button>
+                <a asp-controller="Home" asp-action="Index" class="btn btn-outline">Cancel</a>
+            </div>
+
+            <div style="display:flex; gap:0.75rem; margin-top:1rem; flex-wrap:wrap;">
+                <a asp-action="Register" class="btn btn-outline btn-sm">Create Account</a>
+                <a asp-action="ForgotPassword" class="btn btn-outline btn-sm">Forgot Password</a>
+            </div>
+
+            <div class="auth-meta">
+                <span class="role-pill">Admin <strong>admin / admin123</strong></span>
+                <span class="role-pill">User <strong>user / user123</strong></span>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

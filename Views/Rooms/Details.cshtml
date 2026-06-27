@@ -1,0 +1,123 @@
+@model HotelManagement.Models.Room
+@{
+    ViewData["Title"] = "Room Details";
+}
+
+@functions {
+    private string RoomImage(string type)
+    {
+        return type switch
+        {
+            "Deluxe" => Url.Content("~/images/room-deluxe.svg"),
+            "Suite" => Url.Content("~/images/room-suite.svg"),
+            "Presidential Suite" => Url.Content("~/images/room-presidential.svg"),
+            "Family Room" => Url.Content("~/images/room-family.svg"),
+            _ => Url.Content("~/images/room-standard.svg")
+        };
+    }
+
+    private (string size, string view, string guests, string floor) RoomSpecs(string type)
+    {
+        return type switch
+        {
+            "Deluxe" => ("42 m²", "City View", "2 Guests", "Mid Floor"),
+            "Suite" => ("58 m²", "Skyline View", "3 Guests", "High Floor"),
+            "Presidential Suite" => ("90 m²", "Panoramic View", "4 Guests", "Top Floor"),
+            "Family Room" => ("65 m²", "Garden View", "4 Guests", "Low Floor"),
+            _ => ("36 m²", "City View", "2 Guests", "Mid Floor")
+        };
+    }
+}
+
+@{
+    var specs = RoomSpecs(Model.Type);
+}
+
+<div class="page-header">
+    <h1>Room <em>@Model.RoomNumber</em></h1>
+    <p>Elegant comfort tailored for your stay</p>
+</div>
+
+<div class="details-grid">
+    <div class="details-card reveal">
+        <div class="room-photo" style="height:240px; border-radius:6px; background-image:url('@RoomImage(Model.Type)');"></div>
+        <div style="margin-top:1.5rem;">
+            <div class="room-type-badge">@Model.Type</div>
+            <h2 style="font-family:'Cormorant Garamond',serif; font-size:2rem; font-weight:400; margin:0.6rem 0;">Room @Model.RoomNumber</h2>
+            <p style="color:var(--text-muted); font-size:0.9rem;">
+                Designed for a refined stay with curated textures, ambient lighting, and premium finishes.
+            </p>
+        </div>
+
+        <div style="margin-top:1.5rem;">
+            <div class="detail-row">
+                <span class="detail-label">Rate</span>
+                <span class="detail-value">PKR @Model.Price.ToString("N0") / night</span>
+            </div>
+            <div class="detail-row">
+                <span class="detail-label">Status</span>
+                <span class="detail-value">@(Model.IsAvailable ? "Available" : "Occupied")</span>
+            </div>
+        </div>
+
+        <div style="margin-top:1.5rem;">
+            <p class="detail-label" style="margin-bottom:0.75rem;">Amenities</p>
+            <div class="amenities-grid">
+                <span class="amenity-pill">King Bed</span>
+                <span class="amenity-pill">High-Speed WiFi</span>
+                <span class="amenity-pill">City View</span>
+                <span class="amenity-pill">24/7 Service</span>
+                <span class="amenity-pill">Mini Bar</span>
+                <span class="amenity-pill">Workspace</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="reveal" style="display:grid; gap:1.2rem;">
+        <div class="cta-panel">
+            <h3>Ready to book?</h3>
+            <p style="color:#D9CCB5; font-size:0.9rem;">Reserve this room instantly and receive a confirmation in seconds.</p>
+            <div style="margin-top:1.2rem; display:grid; gap:0.6rem;">
+                @if (Model.IsAvailable)
+                {
+                    <a asp-controller="Bookings" asp-action="Book" asp-route-id="@Model.Id" class="btn btn-gold" style="width:100%; text-align:center;">Book This Room</a>
+                }
+                else
+                {
+                    <button class="btn btn-outline" style="width:100%; text-align:center; opacity:0.6; cursor:not-allowed;" disabled>Currently Unavailable</button>
+                }
+                <a asp-controller="Rooms" asp-action="Index" class="btn btn-outline" style="width:100%; text-align:center;">Back to Rooms</a>
+            </div>
+        </div>
+
+        <div class="details-card">
+            <p class="detail-label" style="margin-bottom:0.75rem;">Room Specs</p>
+            <div class="spec-list">
+                <div class="spec-item"><span>Size</span> @specs.size</div>
+                <div class="spec-item"><span>View</span> @specs.view</div>
+                <div class="spec-item"><span>Capacity</span> @specs.guests</div>
+                <div class="spec-item"><span>Floor</span> @specs.floor</div>
+            </div>
+        </div>
+
+        <div class="details-card">
+            <p class="detail-label" style="margin-bottom:0.75rem;">Stay Highlights</p>
+            <div class="detail-row">
+                <span class="detail-label">Check-In</span>
+                <span class="detail-value">2:00 PM</span>
+            </div>
+            <div class="detail-row">
+                <span class="detail-label">Check-Out</span>
+                <span class="detail-value">12:00 PM</span>
+            </div>
+            <div class="detail-row">
+                <span class="detail-label">Breakfast</span>
+                <span class="detail-value">Included</span>
+            </div>
+            <div class="detail-row">
+                <span class="detail-label">Support</span>
+                <span class="detail-value">Concierge 24/7</span>
+            </div>
+        </div>
+    </div>
+</div>
